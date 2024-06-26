@@ -1,1 +1,1 @@
-export const backendURL = 'http://localhost:8081'
+export const backendURL = 'https://financial-fraud-detection.onrender.com'
