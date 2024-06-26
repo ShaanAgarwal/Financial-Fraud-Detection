@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box, Table, Thead, Tbody, Tr, Th, Td, Spinner, Alert, AlertIcon } from '@chakra-ui/react';
+import { backendURL } from '../../backendURL';
 
 const ViewUsers = () => {
   const [users, setUsers] = useState([]);
@@ -10,7 +11,7 @@ const ViewUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/users');
+        const response = await axios.get(`${backendURL}/api/users`);
         setUsers(response.data);
         setLoading(false);
       } catch (error) {

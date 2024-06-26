@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box, Table, Thead, Tbody, Tr, Th, Td, Spinner, Alert, AlertIcon } from '@chakra-ui/react';
+import { backendURL } from '../../backendURL';
 
 const ViewFraudTransactions = () => {
   const [fraudTransactions, setFraudTransactions] = useState([]);
@@ -10,14 +11,14 @@ const ViewFraudTransactions = () => {
   useEffect(() => {
     const fetchFraudTransactions = async () => {
       try {
-        const fraudTransactionResponse = await axios.get('http://localhost:8080/api/fraud-transactions');
+        const fraudTransactionResponse = await axios.get(`${backendURL}/api/fraud-transactions`);
         const fraudTransactions = fraudTransactionResponse.data;
 
         const userIds = [
           ...new Set(fraudTransactions.flatMap(tx => [tx.userId, tx.recipientId]))
         ];
 
-        const userResponses = await Promise.all(userIds.map(id => axios.get(`http://localhost:8080/api/users/${id}`)));
+        const userResponses = await Promise.all(userIds.map(id => axios.get(`${backendURL}/api/users/${id}`)));
         const users = userResponses.reduce((acc, userResponse) => {
           acc[userResponse.data.userId] = userResponse.data.username;
           return acc;

@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: financialfrauddetection
+  data:
+    mongodb:
+      uri: mongodb+srv://agarwalshaan27:wJUXy2Z3WFGW2MSt@cluster0.7yhqci1.mongodb.net/finance_db?retryWrites=true&w=majority&appName=Cluster0
+  main:
+    allow-circular-references: true
+
+server:
+  port: 8081
