@@ -118,13 +118,16 @@ public class FraudTransactionService {
         Date oneHourAgo = new Date(now.getTime() - oneHourMillis);
         long oneWeekMillis = 7 * 24 * 60 * 60 * 1000;
         Date oneWeekAgo = new Date(now.getTime() - oneWeekMillis);
+
         List<Transaction> recentTransactions = transactionRepository.findByUserIdAndTimestampBetween(
                 transaction.getUserId(), oneHourAgo, now);
         List<Transaction> weeklyTransactions = transactionRepository.findByUserIdAndTimestampBetween(
                 transaction.getUserId(), oneWeekAgo, now);
-        if (weeklyTransactions.isEmpty()) {
+
+        if (weeklyTransactions.size() < 10) {
             return;
         }
+
         double averageTransactionsPerHour = (double) weeklyTransactions.size() / (7 * 24);
         if (recentTransactions.size() > 3 * averageTransactionsPerHour) {
             FraudTransaction fraudTransaction = new FraudTransaction();
