@@ -12,9 +12,15 @@ const ViewUsers = () => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(`${backendURL}/api/users`);
-        setUsers(response.data);
+        console.log('API response:', response.data);  // Logging API response
+        if (Array.isArray(response.data)) {
+          setUsers(response.data);
+        } else {
+          setError('Unexpected response format');
+        }
         setLoading(false);
       } catch (error) {
+        console.error('Error fetching users:', error);  // Logging error
         setError('Error fetching users');
         setLoading(false);
       }
